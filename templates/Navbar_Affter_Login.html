@@ -1,0 +1,136 @@
+{% load static %}
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="main-menu">
+                <li>
+                    <i class="fas fa-home"></i>
+                    <a class="nav-link active" aria-current="page" href="{% url 'Overview:Overview' %}">Tổng quan</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <i class="fas fa-file-invoice"></i>
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Hàng hóa</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li>
+                            <i class="far fa-list-alt"></i>
+                            <a class="dropdown-item" href="{% url 'Commodity:Product' %}">Danh mục sản phẩm</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-capsules"></i>
+                            <a class="dropdown-item" href="{% url 'Commodity:Prescription' %}">Đơn thuốc</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-tags"></i>
+                            <a class="dropdown-item" href="{% url 'Commodity:Price_setting' %}">Thiết lập giá</a>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <i class="fas fa-dolly-flatbed"></i>
+                            <a class="dropdown-item" href="{% url 'Commodity:Drug_inventory' %}">Kiểm kê kho thuốc</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <i class="fas fa-handshake"></i>
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Giao dịch</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li>
+                            <i class="fas fa-file-invoice-dollar"></i>
+                            <a class="dropdown-item" href="#">Hóa đơn bán hàng</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-money-check"></i>
+                            <a class="dropdown-item" href="#">Hóa đơn nhập hàng</a>
+                        </li>
+                        <li>
+                            <i class="far fa-credit-card"></i>
+                            <a class="dropdown-item" href="#">Hóa đơn nhận trả hàng</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-credit-card"></i>
+                            <a class="dropdown-item" href="#">Hóa đơn gửi trả hàng</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-dolly"></i>
+                            <a class="dropdown-item" href="#">Hóa đơn vận chuyển</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <i class="fas fa-exchange-alt"></i>
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Tương tác</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li>
+                            <i class="fas fa-user-plus"></i>
+                            <a class="dropdown-item" href="#">Khách hàng</a>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <i class="fas fa-shipping-fast"></i>
+                            <a class="dropdown-item" href="#">Nhà cung cấp</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <i class="fas fa-shopping-cart"></i>
+                    <a class="nav-link active" aria-current="page" href="#">Nhập hàng</a>
+                </li>
+
+                <li class="nav-item">
+                    <i class="fas fa-shopping-basket"></i>
+                    <a class="nav-link active" aria-current="page" href="#">Bán hàng</a>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <i class="fas fa-cash-register"></i>
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Báo cáo & Thống kê</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li>
+                            <i class="fas fa-flag"></i>
+                            <a class="dropdown-item" href="#">Báo cáo chất lượng thuốc</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-info-circle"></i>
+                            <a class="dropdown-item" href="#">Báo cáo công nợ thu</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-info"></i>
+                            <a class="dropdown-item" href="#">Báo cáo công nợ trả</a>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <i class="fas fa-money-bill-wave"></i>
+                            <a class="dropdown-item" href="#">Thống kê thu nhập</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+
+            <ul class="navbar-nav mb-0 mb-lg-0" id="main-menu-user">
+                <div class="dropdown">
+                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-user"></i>{{request.user}}
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <li>
+                            <i class="fas fa-pen-alt"></i>
+                            <a class="dropdown-item" href="#">Change Password</a>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li class="nav-item">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <a class="dropdown-item" href="#">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </ul>
+        </div>
+    </div>
+</nav>

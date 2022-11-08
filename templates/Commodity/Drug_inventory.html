@@ -1,0 +1,132 @@
+{% extends 'Base.html' %}
+{% load static %}
+{% block title %}Kiểm tra kho thuốc{% endblock title %}
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/style_Commodity.css' %}">
+{% endblock style %}
+{% block main %}
+    <div class="container">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h2><b>Danh mục kiểm kê thuốc</b></h2>
+                    </div>
+                    <div class="col-sm-6">
+                        <a href="#addDrugInventory" class="btn btn-primary" data-bs-toggle="modal"><i class="fa-solid fa-plus"></i><span>Thêm sản phẩm</span></a>					
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-hover" id="DataTable">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Mã kiểm kho</th>
+                        <th>Thời gian kiểm kho</th>
+                        <th>Mã hàng</th>
+                        <th>Số lượng tồn kho</th>
+                        <th>Đánh giá chất lượng thuốc</th>
+                        <th>Điều chỉnh</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for DrugInventory in DrugInventory_data %}
+                    <tr>
+                        <th scope="row">{{forloop.counter}}</th>
+                        <td>{{DrugInventory.makiemkho}}</td>
+                        <td>{{DrugInventory.thoigiankiemkho}}</td>
+                        <td>{{DrugInventory.mahang}}</td>
+                        <td>{{DrugInventory.so_luong_ton_kho}}</td>
+                        <td>{{DrugInventory.danh_gia_thuoc}}</td>
+                        <td>
+                            <center>
+                                <a href="#Edit-{{forloop.counter}}" class="edit" data-bs-toggle="modal"><i class="fa-solid fa-pen-to-square"></i></a>
+                            </center>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="addDrugInventory" class="modal fade">
+		<div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{% url 'Commodity:Add_Drug_inventory' %}" method="post">
+                    {% csrf_token %}
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Thêm sảm phẩm</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="id_ma_kiem_kho">Mã kiểm kho:</label>
+                        <input class="form-control" id="id_ma_kiem_kho" maxlength="25" name="makiemkho" required="" type="text">
+                        <label for="id_thoi_gian_kiem_kho">Thời gian kiểm kho:</label>
+                        <input class="form-control" id="id_thoi_gian_kiem_kho" name="thoigiankiemkho" placeholder="Select a date" required="" type="date">
+                        <label for="id_ma_hang">Mã hàng:</label>
+                        <input class="form-control" id="id_ma_hang" maxlength="25" name="mahang" required="" type="text">
+                        <label for="id_so_luong_ton_kho">Số lượng tồn kho:</label>
+                        <input class="form-control" id="id_so_luong_ton_kho" name="so_luong_ton_kho" required="" type="number">
+                        <label for="id_danh_gia_thuoc">Đánh giá chất lượng thuốc:</label>
+                        <select class="form-control" id="id_danh_gia_thuoc" name="danh_gia_thuoc">
+                            <option selected="" value="">---------</option>
+                            <option value="Đảm bảo chất lượng">Đảm bảo chất lượng</option>
+                            <option value="Không đảm bảo chất lượng">Không đảm bảo chất lượng</option>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Lưu</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+	</div>
+
+    {% for i in DrugInventory_data %}
+        <div id="Edit-{{forloop.counter}}" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="UPDATE_Drug_inventory/{{i.id}}" method="post">
+                        {% csrf_token %}
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Sửa thông tin kho</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>Mã kiểm kho</label>
+                                <input name="makiemkho" value="{{i.makiemkho}}" type="text" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Thời gian kiểm kho</label>
+                                <input class="form-control" value="{{i.thoigiankiemkho}}" name="thoigiankiemkho" type="date">
+                            </div>
+                            <div class="form-group">
+                                <label>Mã hàng</label>
+                                <input name="mahang" value="{{i.mahang}}" type="text" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Số lượng tồn kho</label>
+                                <input name="so_luong_ton_kho" value="{{i.so_luong_ton_kho}}" type="text" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Đánh giá chất lượng thuốc</label>
+                                <select class="form-control" name="danh_gia_thuoc">
+                                    <option value="{{i.danh_gia_thuoc}}">{{i.danh_gia_thuoc}}</option>
+                                    <option value="Đảm bảo chất lượng">Đảm bảo chất lượng</option>
+                                    <option value="Không đảm bảo chất lượng">Không đảm bảo chất lượng</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Lưu</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock main %}

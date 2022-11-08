@@ -1,0 +1,101 @@
+@media only screen and (max-width: 992px) {
+    #main-menu{
+        display: flex;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        position: relative;
+    }
+
+    #main-menu li{
+        margin-left: 10px;
+    }
+    
+    #main-menu li a{
+        color: #2950c4;
+        display: block;
+        padding: 1px 18px 0px 25px;
+        text-decoration: none;
+        margin: -26px 0px 0px;
+    }
+    
+    #main-menu li ul{
+        margin-top: 28px;
+        background-color: cyan;
+    }
+    
+    #main-menu>li>a{
+        position: relative;
+    }
+}
+
+@media only screen and (min-width: 992px) {
+    #main-menu{
+        display: flex;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        position: relative;
+    }
+    
+    #main-menu-user{
+        border: 1px solid rgb(212, 201, 201);
+        margin-right: 0px;
+    }
+
+    #main-menu-user>.dropdown>a>i{
+        color: rgb(0, 0, 0);
+        padding-right: 10px;
+    }
+    #main-menu-user .dropdown-menu{
+        border: 1px solid rgb(10, 9, 9);
+        background-color: #e6ebe3;
+        margin: 20px 0px 0px -85px;
+    }
+
+    #main-menu-user .dropdown-menu li{
+        color: rgb(234, 12, 12);
+        padding-left: 10px;
+    }
+    #main-menu-user .dropdown-menu li a{
+        color: #5fda0d;
+        display: block;
+        padding: 1px 18px 0px 25px;
+        text-decoration: none;
+        margin: -26px 0px 0px;
+    }
+    #main-menu li{
+        margin-left: 10px;
+    }
+    
+    #main-menu li a{
+        color: #5fda0d;
+        display: block;
+        padding: 1px 18px 0px 25px;
+        text-decoration: none;
+        margin: -26px 0px 0px;
+    }
+    
+    #main-menu li ul{
+        margin-top: 15px;
+        background-color: #658888;
+    }
+    
+    #main-menu>li>a{
+        position: relative;
+    }
+    
+    #main-menu>li>a::before{
+        content: "";
+        height: 5px;
+        background-color: rgb(255, 0, 0);
+        position: absolute;
+        bottom: -10px;
+        left: 0px;
+        transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    
+    #main-menu>li:hover>a::before{
+        width: 100%;
+    }
+}

@@ -1,0 +1,174 @@
+{% extends 'Base.html' %}
+{% load static %}
+{% block title %}Sản phẩm{% endblock title %}
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/lib/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{% static 'css/style_Commodity.css' %}">
+{% endblock style %}
+{% block main %}
+    <div class="container">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h2><b>Danh mục sản phẩm</b></h2>
+                    </div>
+                    <div class="col-sm-6">
+                        <a href="#addEmployeeModal" class="btn btn-primary" data-bs-toggle="modal"><i class="fa-solid fa-plus"></i><span>Thêm sản phẩm</span></a>					
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-hover" id="DataTable">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Mã hàng</th>
+                        <th>Tên hàng</th>
+                        <th>Đơn vị</th>
+                        <th>Giá gốc</th>
+                        <th>Giá bán</th>
+                        <th>Tồn kho</th>
+                        <th>Trạng thái</th>
+                        <th>Điều chỉnh</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for Product in Product_data %}
+                    <tr>
+                        <th scope="row">{{forloop.counter}}</th>
+                        <td>{{Product.ma_hang}}</td>
+                        <td>{{Product.ten_hang}}</td>
+                        <td>{{Product.don_vi}}</td>
+                        <td>{{Product.gia_goc}}</td>
+                        <td>{{Product.gia_ban}}</td>
+                        <td>{{Product.so_luong_ton_kho}}</td>
+                        <td>{{Product.trang_thai}}</td>
+                        <td>
+                            <center>
+                                <a href="#Edit-{{forloop.counter}}" class="edit" data-bs-toggle="modal"><i class="fa-solid fa-pen-to-square"></i></a>
+                            </center>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="addEmployeeModal" class="modal fade">
+		<div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{% url 'Commodity:Add_Product' %}" method="post">
+                    {% csrf_token %}
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Thêm sảm phẩm</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="id_ma_hang">Mã hàng:</label>
+                        <input class="form-control" id="id_ma_hang" maxlength="25" name="ma_hang" required="" type="text">
+                        <label for="id_ten_hang">Tên hàng:</label>
+                        <input class="form-control" id="id_ten_hang" maxlength="255" name="ten_hang" required="" type="text">
+                        <label for="id_don_vi">Đơn vị:</label>
+                        <select class="form-control" id="id_don_vi" name="don_vi">
+                            <option value="">---------</option>
+                            <option value="Vỉ">Vỉ</option>
+                            <option value="Hộp">Hộp</option>
+                            <option value="Tuýp">Tuýp</option>
+                            <option value="Lọ">Lọ</option>
+                            <option value="Chai">Chai</option>
+                            <option value="Viên">Viên</option>
+                            <option value="Cái">Cái</option>
+                            <option value="Gói">Gói</option>
+                        </select>
+                        <label for="id_gia_goc">Giá gốc:</label>
+                        <input class="form-control" id="id_gia_goc" name="gia_goc" required="" type="number">
+                        <label for="id_gia_ban">Giá bán:</label>
+                        <input class="form-control" id="id_gia_ban" name="gia_ban" required="" type="number">
+                        <label for="id_so_luong_ton_kho">Số lượng tồn kho:</label>
+                        <input class="form-control" id="id_so_luong_ton_kho" name="so_luong_ton_kho" required="" type="number">
+                        <label for="id_trang_thai">Trạng thái:</label>
+                        <select class="form-control" id="id_trang_thai" name="trang_thai">
+                            <option value="">---------</option>
+                            <option selected="" value="Đang kinh doanh">Đang kinh doanh</option>
+                            <option value="Ngừng kinh doanh">Ngừng kinh doanh</option>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Lưu</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+	</div>
+
+    {% for i in Product_data %}
+        <div id="Edit-{{forloop.counter}}" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="Update/{{i.id}}" method="post">
+                        {% csrf_token %}
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Sửa thông tin sảm phẩm</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>Mã hàng</label>
+                                <input name="ma_hang" value="{{i.ma_hang}}" type="text" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Tên hàng</label>
+                                <input name="ten_hang" value="{{i.ten_hang}}" type="text" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Đơn vị</label>
+                                <select class="form-control" name="don_vi">
+                                    <option value="{{i.don_vi}}">{{i.don_vi}}</option>
+                                    <option value="Vỉ">Vỉ</option>
+                                    <option value="Hộp">Hộp</option>
+                                    <option value="Tuýp">Tuýp</option>
+                                    <option value="Lọ">Lọ</option>
+                                    <option value="Chai">Chai</option>
+                                    <option value="Viên">Viên</option>
+                                    <option value="Cái">Cái</option>
+                                    <option value="Gói">Gói</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Giá gốc</label>
+                                <input name="gia_goc" value="{{i.gia_goc}}" type="text" class="form-control" ReadOnly="true">
+                            </div>
+                            <div class="form-group">
+                                <label>Giá bán</label>
+                                <input name="gia_ban" value="{{i.gia_ban}}" type="text" class="form-control" ReadOnly="true">
+                            </div>
+                            <div class="form-group">
+                                <label>Số lượng tồn kho</label>
+                                <input name="so_luong_ton_kho" value="{{i.so_luong_ton_kho}}" type="text" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Trạng thái</label>
+                                <select class="form-control" name="trang_thai">
+                                    <option value="{{i.trang_thai}}">{{i.trang_thai}}</option>
+                                    <option value="Đang kinh doanh">Đang kinh doanh</option>
+                                    <option value="Ngừng kinh doanh">Ngừng kinh doanh</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Lưu</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock main %}
+
+{% block javascript %}
+    <script src="{% static 'js/Product.js' %}"></script>
+{% endblock javascript %}

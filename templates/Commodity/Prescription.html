@@ -1,0 +1,254 @@
+{% extends 'Base.html' %}
+{% load static %}
+{% block title %}Đơn thuốc{% endblock title %}
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/lib/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{% static 'css/style_Commodity.css' %}">
+{% endblock style %}
+{% block main %}
+ {% comment %} <main id="main" class="main">
+    <aside id="sidebar" class="sidebar">
+        <ul class="sidebar-nav" id="sidebar-nav">
+           <li class="nav-item"> <a class="nav-link " href="#"> <i class="bi bi-grid"></i> <span>Lọc và tìm kiếm</span> </a></li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#"> <i class="bi bi-journal-text"></i><span>Trạng thái</span><i class="bi bi-chevron-down ms-auto"></i> </a>
+                <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li> <a href="#"> <input type="checkbox" name="" id=""> Áp dụng</a> </li>
+                    <li> <a href="#"> <input type="checkbox" name="" id=""> Chưa áp dụng </a> </li>
+                </ul>
+            </li>
+        </ul>
+    </aside>
+    <div class="pagetitle" id="header">
+        <div class="d-flex align-items-center justify-content-between">
+            <a href="#" class="logo d-flex align-items-center">
+               <span class="d-none d-lg-block">Đơn thuốc mẫu</span>
+               <i class="bi bi-list toggle-sidebar-btn"></i>
+            </a>
+         </div>
+       <h1></h1>
+    </div>
+    <section class="section  container">
+        <div class="row justify-content-around mt-1">
+            <div class="col-sm-12">
+                <a href="Add_Prescription" class="btn btn-primary float-end">Thêm mới</a>
+            </div>
+        </div>
+
+        <div class="row  justify-content-around text-white mt-1">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table datatable table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">STT</th>
+                                    <th scope="col">Ngày nhập</th>
+                                    <th scope="col">Mã thuốc</th>
+                                    <th scope="col">Tên thuốc</th>
+                                    <th scope="col">Đơn vị</th>
+                                    <th scope="col">Số lượng dùng</th>
+                                    <th scope="col">Liều dùng</th>
+                                    <th scope="col">Trạng thái thuốc</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for Prescription in Prescription_data %}
+                                <tr>
+                                    <th scope="row">{{forloop.counter}}</th>
+                                    <td>{{Prescription.Ngay_Nhap}}</td>
+                                    <td>{{Prescription.Ma_Thuoc}}</td>
+                                    <td>{{Prescription.Ten_Thuoc}}</td>
+                                    <td>{{Prescription.Don_Vi}}</td>
+                                    <td>{{Prescription.So_Luong_Dung}}</td>
+                                    <td>{{Prescription.Lieu_Dung}}</td>
+                                    <td>{{Prescription.Trang_Thai_Thuoc}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+ </main> {% endcomment %}
+
+    <div class="container">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h2><b>Danh mục đơn thuốc</b></h2>
+                    </div>
+                    <div class="col-sm-6">
+                        <a href="#addPrescription" class="btn btn-primary" data-bs-toggle="modal"><i class="fa-solid fa-plus"></i><span>Thêm sản phẩm</span></a>					
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-hover" id="DataTable">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Ngày nhập</th>
+                        <th>Mã thuốc</th>
+                        <th>Tên thuốc</th>
+                        <th>Đơn vị</th>
+                        <th>Số lượng dùng</th>
+                        <th>Liều dùng</th>
+                        <th>Trạng thái thuốc</th>
+                        <th>Ghi chú</th>
+                        <th>Điều chỉnh</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for Prescription in Prescription_data %}
+                    <tr>
+                        <th scope="row">{{forloop.counter}}</th>
+                            <td>{{Prescription.ngay_nhap}}</td>
+                            <td>{{Prescription.ma_thuoc}}</td>
+                            <td>{{Prescription.ten_thuoc}}</td>
+                            <td>{{Prescription.don_vi}}</td>
+                            <td>{{Prescription.so_luong_dung}}</td>
+                            <td>{{Prescription.lieu_dung}}</td>
+                            <td>{{Prescription.trang_thai_thuoc}}</td>
+                            <td>{{Prescription.ghi_chu}}</td>
+                        <td>
+                            <center>
+                                <a href="#Edit_Pre-{{forloop.counter}}" class="edit" data-bs-toggle="modal"><i class="fa-solid fa-pen-to-square"></i></a>
+                            </center>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="addPrescription" class="modal fade">
+		<div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{% url 'Commodity:Add_Prescription' %}" method="post">
+                    {% csrf_token %}
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Thêm đơn thuốc</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="id_ngay_nhap">Ngày nhập:</label>
+                        <input class="form-control" id="id_ngay_nhap" name="ngay_nhap" placeholder="Select a date" required="" type="date">
+                        <label for="id_ma_thuoc">Mã thuốc:</label>
+                        <input class="form-control" id="id_ma_thuoc" maxlength="25" name="ma_thuoc" required="" type="text">
+                        <label for="id_ten_thuoc">Tên thuốc:</label>
+                        <input class="form-control" id="id_ten_thuoc" maxlength="255" name="ten_thuoc" required="" type="text">
+                        <label for="id_don_vi">Đơn vị:</label>
+                        <select class="form-control" id="id_don_vi" name="don_vi">
+                            <option selected="" value="">---------</option>
+                            <option value="Vỉ">Vỉ</option>
+                            <option value="Hộp">Hộp</option>
+                            <option value="Tuýp">Tuýp</option>
+                            <option value="Lọ">Lọ</option>
+                            <option value="Chai">Chai</option>
+                            <option value="Viên">Viên</option>
+                            <option value="Cái">Cái</option>
+                            <option value="Gói">Gói</option>
+                        </select>
+                        <label for="id_so_luong_dung">Số lượng dùng:</label>
+                        <input class="form-control" id="id_so_luong_dung" name="so_luong_dung" required="" type="number">
+                        <label for="id_lieu_dung">Liều dùng:</label>
+                        <input class="form-control" id="id_lieu_dung" maxlength="255" name="lieu_dung" required="" type="text">
+                        <label for="id_trang_thai_thuoc">Trạng thái thuốc:</label>
+                        <select class="form-control" id="id_trang_thai_thuoc" name="trang_thai_thuoc">
+                            <option selected="" value="Áp dụng">Áp dụng</option>
+                            <option value="Chưa áp dụng">Chưa áp dụng</option>
+                        </select>
+                        <label for="id_ghi_chu">Ghi chú:</label>
+                        <textarea class="form-control" cols="40" id="id_ghi_chu" name="ghi_chu" required="" rows="10"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Lưu</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+	</div>
+
+    {% for i in Prescription_data %}
+        <div id="Edit_Pre-{{forloop.counter}}" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="Update_Pre/{{i.id}}" method="post">
+                        {% csrf_token %}
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Sửa thông tin đơn thuốc</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            {% comment %} <div class="form-group">
+                                <label>ID</label>
+                                <input class="form-control" value="{{i.id}}" name="{{i.id}}">
+                            </div> {% endcomment %}
+                            <div class="form-group">
+                                <label>Ngày nhập</label>
+                                <input class="form-control" value="{{i.ngay_nhap}}" name="ngay_nhap" type="date">
+                            </div>
+                            <div class="form-group">
+                                <label>Mã thuốc:</label>
+                                <input class="form-control" value="{{i.ma_thuoc}}" name="ma_thuoc" type="text">
+                            </div>
+                            <div class="form-group">
+                                <label>Tên thuốc:</label>
+                                <input class="form-control" value="{{i.ten_thuoc}}" name="ten_thuoc" type="text">
+                            </div>
+                            <div class="form-group">
+                                <label>Đơn vị:</label>
+                                <select class="form-control" name="don_vi">
+                                    <option value="{{i.don_vi}}">{{i.don_vi}}</option>
+                                    <option value="Vỉ">Vỉ</option>
+                                    <option value="Hộp">Hộp</option>
+                                    <option value="Tuýp">Tuýp</option>
+                                    <option value="Lọ">Lọ</option>
+                                    <option value="Chai">Chai</option>
+                                    <option value="Viên">Viên</option>
+                                    <option value="Cái">Cái</option>
+                                    <option value="Gói">Gói</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Số lượng dùng</label>
+                                <input class="form-control" value="{{i.so_luong_dung}}" name="so_luong_dung" type="number">
+                            </div>
+                            <div class="form-group">
+                                <label>Liều dùng</label>
+                                <input class="form-control" value="{{i.lieu_dung}}" name="lieu_dung" type="text">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Trạng thái thuốc</label>
+                                <select class="form-control" name="trang_thai_thuoc">
+                                    <option value="{{i.trang_thai_thuoc}}">{{i.trang_thai_thuoc}}</option>
+                                    <option value="Áp dụng">Áp dụng</option>
+                                    <option value="Chưa áp dụng">Chưa áp dụng</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Ghi chú</label>
+                                <textarea class="form-control" value="{{i.ghi_chu}}" cols="40" name="ghi_chu" rows="10"></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Lưu</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock main %}
+
+{% block javascript %}
+    <script src="{% static 'js/Product.js' %}"></script>
+{% endblock javascript %}

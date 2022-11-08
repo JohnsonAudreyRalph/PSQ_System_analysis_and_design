@@ -1,0 +1,33 @@
+{% extends 'Base.html' %}
+{% load static %}
+{% block title %}Login{% endblock title %}
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/style_Login.css' %}">
+{% endblock style %}
+{% block main %}
+	<div class="main">
+		<div>
+			<div class="Login">
+				<div class="Login-head">
+				<h2>Login</h2>
+			</div>
+			<div class="clear-loading spinner">
+				<span></span>
+			</div>
+			<form action="" method="post">
+				{% csrf_token %}
+				<input type="text" id="User_Name" name="User_Name" placeholder="User Name" required>
+				<input type="password" id="Password" name="Password" placeholder="Password" required>
+				<div>
+					<div class="submit">
+						<button type="submit">Đăng nhập</button>
+					</div>
+					<div class="clear"> </div>
+				</div>
+			</form>
+			</div>
+		</div>
+	</div>
+{% endblock main %}
+
+{% block javascript %}{% endblock javascript %}
