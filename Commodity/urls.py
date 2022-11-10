@@ -14,16 +14,8 @@ urlpatterns = [
 
     path('Price_setting/', Price_setting.as_view(), name='Price_setting'),
     path('Price_setting/Update_Price/<str:id>', UPDATE_Price, name='Update_Price'),
-
-
-
-
-
-
-
+    
     path('Drug_inventory/', Drug_inventory.as_view(), name='Drug_inventory'),
     path('Drug_inventory/Add_Drug_inventory/', Add_Drug_inventory.as_view(), name='Add_Drug_inventory'),
     path('Drug_inventory/UPDATE_Drug_inventory/<str:id>', UPDATE_Drug_inventory, name='UPDATE_Drug_inventory'),
-
-
 ]

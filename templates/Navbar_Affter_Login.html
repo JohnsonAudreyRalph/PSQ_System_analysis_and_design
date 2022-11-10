@@ -41,23 +41,23 @@
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li>
                             <i class="fas fa-file-invoice-dollar"></i>
-                            <a class="dropdown-item" href="#">Hóa đơn bán hàng</a>
+                            <a class="dropdown-item" href="{% url 'Transaction:Bill_of_Sale' %}">Hóa đơn bán hàng</a>
                         </li>
                         <li>
                             <i class="fas fa-money-check"></i>
-                            <a class="dropdown-item" href="#">Hóa đơn nhập hàng</a>
+                            <a class="dropdown-item" href="{% url 'Transaction:Bill_of_Import' %}">Hóa đơn nhập hàng</a>
                         </li>
                         <li>
                             <i class="far fa-credit-card"></i>
-                            <a class="dropdown-item" href="#">Hóa đơn nhận trả hàng</a>
+                            <a class="dropdown-item" href="{% url 'Transaction:Bill_of_Return_the_Goods' %}">Hóa đơn nhận trả hàng</a>
                         </li>
                         <li>
                             <i class="fas fa-credit-card"></i>
-                            <a class="dropdown-item" href="#">Hóa đơn gửi trả hàng</a>
+                            <a class="dropdown-item" href="{% url 'Transaction:Bill_of_Return_Goods_Back' %}">Hóa đơn gửi trả hàng</a>
                         </li>
                         <li>
                             <i class="fas fa-dolly"></i>
-                            <a class="dropdown-item" href="#">Hóa đơn vận chuyển</a>
+                            <a class="dropdown-item" href="{% url 'Transaction:Bill_of_Delivery' %}">Hóa đơn vận chuyển</a>
                         </li>
                     </ul>
                 </li>

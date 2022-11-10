@@ -1,0 +1,109 @@
+{% extends 'Base.html' %}
+{% load static %}
+{% block title %}Hóa đơn nhận trả hàng{% endblock title %}
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/style_Transaction.css' %}">
+{% endblock style %}
+{% block main %}
+    <div class="container">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h2><b>Trả hàng</b></h2>
+                    </div>
+                    <div class="col-sm-6">
+                        <a href="#add_Bill_of_Return_the_Goods" class="btn btn-primary" data-bs-toggle="modal"><i class="fa-solid fa-plus"></i><span>Thêm sản phẩm</span></a>					
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-hover" id="DataTable">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Mã trả hàng</th>
+                        <th>Thời gian</th>
+                        <th>Khách hàng</th>
+                        <th>Điều chỉnh</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for Bill_of_Return_the_Goods in Bill_of_Return_the_Goods_data %}
+                    <tr>
+                        <th scope="row">{{forloop.counter}}</th>
+                        <td>{{Bill_of_Return_the_Goods.matrahang}}</td>
+                        <td>{{Bill_of_Return_the_Goods.thoigian}}</td>
+                        <td>{{Bill_of_Return_the_Goods.makhachhang}}</td>
+                        <td>
+                            <center>
+                                <a href="#Edit-{{forloop.counter}}" class="edit" data-bs-toggle="modal"><i class="fa-solid fa-pen-to-square"></i></a>
+                            </center>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="add_Bill_of_Return_the_Goods" class="modal fade">
+		<div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{% url 'Transaction:Add_Bill_of_Return_the_Goods' %}" method="post">
+                    {% csrf_token %}
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Thêm hàng trả</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="id_ma_hang_tra">Mã hàng:</label>
+                        <input class="form-control" id="id_ma_hang_tra" maxlength="25" name="matrahang" required="" type="text">
+                        <label for="id_thoi_gian">Thời gian:</label>
+                        <input class="form-control" id="id_thoi_gian" name="thoigian" placeholder="Select a date" required="" type="date">
+                        <label for="id_ma_khach_hang">Mã khách hàng:</label>
+                        <input class="form-control" id="id_ma_khach_hang" name="makhachhang" required="" type="text">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Lưu</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+	</div>
+
+    {% for i in Bill_of_Return_the_Goods_data %}
+        <div id="Edit-{{forloop.counter}}" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="UPDATE_Bill_of_Return_the_Goods/{{i.id}}" method="post">
+                        {% csrf_token %}
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Sửa thông tin trả hàng</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>Mã trả hàng</label>
+                                <input name="matrahang" value="{{i.matrahang}}" type="text" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Thời gian</label>
+                                <input class="form-control" value="{{i.thoigian}}" name="thoigian" type="date">
+                            </div>
+                            <div class="form-group">
+                                <label>Mã khách hàng</label>
+                                <input name="makhachhang" value="{{i.makhachhang}}" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Lưu</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+{% endblock main %}

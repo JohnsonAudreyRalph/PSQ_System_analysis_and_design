@@ -1,0 +1,109 @@
+{% extends 'Base.html' %}
+{% load static %}
+{% block title %}Hóa đơn bán hàng{% endblock title %}
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/style_Transaction.css' %}">
+{% endblock style %}
+{% block main %}
+    <div class="container">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-md-auto">
+                        <h2><b>Hóa đơn bán hàng</b></h2>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-hover" id="DataTable">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Mã đơn hàng</th>
+                        <th>Thời gian</th>
+                        <th>Mã trả hàng</th>
+                        <th>Loại khách hàng</th>
+                        <th>Tổng tiền</th>
+                        <th>Giảm giá</th>
+                        <th>Khách hàng trả</th>
+                        <th>Điều chỉnh</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for Bill_of_Sale in Bill_of_Sale_data %}
+                    <tr>
+                        <th scope="row">{{forloop.counter}}</th>
+                        <td>{{Bill_of_Sale.madonhang}}</td>
+                        <td>{{Bill_of_Sale.thoigian}}</td>
+                        <td>{{Bill_of_Sale.matrahang}}</td>
+                        <td>{{Bill_of_Sale.loaikhachhang}}</td>
+                        <td>{{Bill_of_Sale.tongtien}}</td>
+                        <td>{{Bill_of_Sale.giamgia}}</td>
+                        <td>{{Bill_of_Sale.khachhangtra}}</td>
+                        <td>
+                            <center>
+                                <a href="#Edit-{{forloop.counter}}" class="edit" data-bs-toggle="modal"><i class="fa-solid fa-pen-to-square"></i></a>
+                            </center>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    {% for i in Bill_of_Sale_data %}
+        <div id="Edit-{{forloop.counter}}" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="Bill_of_Sale_UPDATE/{{i.id}}" method="post">
+                        {% csrf_token %}
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Sửa thông tin bán hàng</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>Mã đơn hàng</label>
+                                <input name="madonhang" value="{{i.madonhang}}" type="text" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Thời gian</label>
+                                <input class="form-control" value="{{i.thoigian}}" name="thoigian" type="date">
+                            </div>
+                            <div class="form-group">
+                                <label>Mã trả hàng</label>
+                                <input name="matrahang" value="{{i.matrahang}}" type="text" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Loại khách hàng</label>
+                                <select class="form-control" name="loaikhachhang">
+                                    <option value="{{i.loaikhachhang}}">{{i.loaikhachhang}}</option>
+                                    <option value="Khách lẻ">Khách lẻ</option>
+                                    <option value="Khách VIP">Khách VIP</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Tổng tiền</label>
+                                <input name="tongtien" value="{{i.tongtien}}" type="text" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Giảm giá</label>
+                                <input name="giamgia" value="{{i.giamgia}}" type="text" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Khách hàng trả</label>
+                                <input name="khachhangtra" value="{{i.khachhangtra}}" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Lưu</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock main %}

@@ -1,4 +1,3 @@
-from dataclasses import fields
 from django import forms
 from .models import ProductModel, PresicriptionModel, DrugInventory
 class Add_Product_Forms(forms.ModelForm):

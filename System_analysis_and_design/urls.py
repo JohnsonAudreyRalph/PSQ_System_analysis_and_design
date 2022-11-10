@@ -21,4 +21,5 @@ urlpatterns = [
     path('', include('Login_Register.urls')),
     path('Overview/', include('Overview.urls')),
     path('Commodity/', include('Commodity.urls')),
+    path('Transaction/', include('Transaction.urls'))
 ]

@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Login_Register',
     'Overview',
-    'Commodity'
+    'Commodity',
+    'Transaction'
 ]
 
 MIDDLEWARE = [

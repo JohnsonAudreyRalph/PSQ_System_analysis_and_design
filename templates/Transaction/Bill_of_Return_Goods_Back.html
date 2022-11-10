@@ -1,0 +1,141 @@
+{% extends 'Base.html' %}
+{% load static %}
+{% block title %}Hóa đơn gửi trả hàng{% endblock title %}
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/style_Transaction.css' %}">
+{% endblock style %}
+{% block main %}
+    <div class="container">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h2><b>Hóa đơn gửi trả hàng</b></h2>
+                    </div>
+                    <div class="col-sm-6">
+                        <a href="#add_Bill_of_Return_Goods_Back" class="btn btn-primary" data-bs-toggle="modal"><i class="fa-solid fa-plus"></i><span>Thêm sản phẩm</span></a>					
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-hover" id="DataTable">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Ngày trả</th>
+                        <th>Tên nhà cung cấp</th>
+                        <th>Tổng tiền hàng trả</th>
+                        <th>Tổng tiền NCC cần trả</th>
+                        <th>NCC đã trả</th>
+                        <th>Trạng thái</th>
+                        <th>Điều chỉnh</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for Bill_of_Return_Goods_Back in Bill_of_Return_Goods_Back_data %}
+                    <tr>
+                        <th scope="row">{{forloop.counter}}</th>
+                        <td>{{Bill_of_Return_Goods_Back.ngaytra}}</td>
+                        <td>{{Bill_of_Return_Goods_Back.tenncc}}</td>
+                        <td>{{Bill_of_Return_Goods_Back.tongtienhangtra}}</td>
+                        <td>{{Bill_of_Return_Goods_Back.tongtienncccantra}}</td>
+                        <td>{{Bill_of_Return_Goods_Back.nccdatra}}</td>
+                        <td>{{Bill_of_Return_Goods_Back.trangthai}}</td>
+                        <td>
+                            <center>
+                                <a href="#Edit-{{forloop.counter}}" class="edit" data-bs-toggle="modal"><i class="fa-solid fa-pen-to-square"></i></a>
+                            </center>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="add_Bill_of_Return_Goods_Back" class="modal fade">
+		<div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{% url 'Transaction:Add_Bill_of_Return_Goods_Back' %}" method="post">
+                    {% csrf_token %}
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Thêm hóa đơn trả</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="id_ngay_tra">Ngày trả:</label>
+                        <input class="form-control" id="id_ngay_tra" name="ngaytra" placeholder="Select a date" required="" type="date">
+                        <label for="id_ten_nha_cung_cap">Tên nhà cung cấp:</label>
+                        <input class="form-control" id="id_ten_nha_cung_cap" maxlength="25" name="tenncc" required="" type="text">
+                        <label for="id_tong_tien_hang_tra">Tổng tiền hàng trả:</label>
+                        <input class="form-control" id="id_tong_tien_hang_tra" maxlength="25" name="tongtienhangtra" required="" type="text">
+                        <label for="id_tong_tien_NCC_can_tra">Tổng tiền NCC cần trả:</label>
+                        <input class="form-control" id="id_tong_tien_NCC_can_tra" maxlength="25" name="tongtienncccantra" required="" type="text">
+                        <label for="id_NCC_da_tra">NCC đã trả:</label>
+                        <input class="form-control" id="id_NCC_da_tra" maxlength="25" name="nccdatra" required="" type="text">
+                        <label for="id_trang_thai">Trạng thái:</label>
+                        <select class="form-control" id="id_trang_thai" name="trangthai">
+                            <option selected="" value="">---------</option>
+                            <option value="Đã trả đủ">Đã trả đủ</option>
+                            <option value="Chưa trả đủ">Chưa trả đủ</option>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Lưu</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+	</div>
+
+    {% for i in Bill_of_Return_Goods_Back_data %}
+        <div id="Edit-{{forloop.counter}}" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="UPDATE_Bill_of_Return_Goods_Back/{{i.id}}" method="post">
+                        {% csrf_token %}
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Sửa thông tin hóa đơn trả hàng</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>Ngày trả</label>
+                                <input class="form-control" value="{{i.ngaytra}}" name="ngaytra" type="date">
+                            </div>
+                            <div class="form-group">
+                                <label>Tên nhà cung cấp</label>
+                                <input name="tenncc" value="{{i.tenncc}}" type="text" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Tổng tiền hàng trả</label>
+                                <input name="tongtienhangtra" value="{{i.tongtienhangtra}}" type="text" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Tổng tiền NCC cần trả</label>
+                                <input name="tongtienncccantra" value="{{i.tongtienncccantra}}" type="text" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>NCC đã trả</label>
+                                <input name="nccdatra" value="{{i.nccdatra}}" type="text" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Trạng thái</label>
+                                <select class="form-control" name="trangthai">
+                                    <option value="{{i.trangthai}}">{{i.trangthai}}</option>
+                                    <option value="Đã trả đủ">Đã trả đủ</option>
+                                    <option value="Chưa trả đủ">Chưa trả đủ</option>
+                                </select>
+                            </div>
+                            
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Lưu</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock main %}
