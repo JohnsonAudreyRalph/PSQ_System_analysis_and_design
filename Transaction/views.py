@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.views import View
+from django.db.models import Sum
 from .models import BillOfDelivery, BillOfImport, BillOfReturnGoodsBack, BillOfReturnTheGoods, BillOfSale
-from .forms import Add_Bill_of_Return_the_Goods_Forms, Add_Bill_of_Return_Goods_Back_Forms
+from .forms import Add_Bill_of_Return_the_Goods_Forms, Add_Bill_of_Return_Goods_Back_Forms, Add_Bill_of_Devicery_Forms
 # Create your views here.
 class Bill_of_Sale(View):
     def get(self, request):
@@ -35,18 +36,23 @@ def Bill_of_Sale_UPDATE(request, id):
 class Bill_of_Import(View):
     def get(self, request):
         Bill_of_Import_data = BillOfImport.objects.all()
-        return render(request, 'Transaction/Bill_of_Import.html', {'Bill_of_Import_data':Bill_of_Import_data})
+        items = BillOfImport.objects.aggregate(TOTAL = Sum('tongtien'))['TOTAL']
+        return render(request, 'Transaction/Bill_of_Import.html', {'Bill_of_Import_data':Bill_of_Import_data, 'item':items})
 
 def Bill_of_Import_UPDATE(request, id):
     if request.method == "POST":
         print("Nhận giá trị rồi")
         ngaynhap = request.POST.get('ngaynhap')
+        manhacungcap = request.POST.get('manhacungcap')
+        mahoadon = request.POST.get('mahoadon')
         tongtien = request.POST.get('tongtien')
         datra = request.POST.get('datra')
         trangthai = request.POST.get('trangthai')
         Bill_of_Import_dt = BillOfImport(
             id = id,
             ngaynhap = ngaynhap,
+            manhacungcap = manhacungcap,
+            mahoadon = mahoadon,
             tongtien = tongtien,
             datra = datra,
             trangthai = trangthai,
@@ -124,4 +130,32 @@ def UPDATE_Bill_of_Return_Goods_Back(request, id):
 
 class Bill_of_Delivery(View):
     def get(self, request):
-        return render(request, 'Transaction/Bill_of_Delivery.html')
+        Bill_of_Delivery_data = BillOfDelivery.objects.all()
+        return render(request, 'Transaction/Bill_of_Delivery.html', {'Bill_of_Delivery_data':Bill_of_Delivery_data})
+
+class Add_Bill_of_Devicery(View):
+    def post(self, request):
+        fm = Add_Bill_of_Devicery_Forms(request.POST)
+        if fm.is_valid():
+            fm.save()
+            return redirect('/Transaction/Bill_of_Delivery/')
+        else:
+            return render(request, 'Transaction/Bill_of_Delivery.html')
+
+def UPDATE_Bill_of_Delivery(request, id):
+    if request.method == "POST":
+        print("Nhận giá trị rồi")
+        maphieuchuyen = request.POST.get('maphieuchuyen')
+        tudiadiem = request.POST.get('tudiadiem')
+        dendiadiem = request.POST.get('dendiadiem')
+        trangthai = request.POST.get('trangthai')
+        Bill_of_Delivery_dt = BillOfDelivery(
+            id = id,
+            maphieuchuyen = maphieuchuyen,
+            tudiadiem = tudiadiem,
+            dendiadiem = dendiadiem,
+            trangthai = trangthai,
+        )
+        Bill_of_Delivery_dt.save()
+        return redirect('/Transaction/Bill_of_Delivery/')
+    return render(request, 'Transaction/Bill_of_Delivery.html')

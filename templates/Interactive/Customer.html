@@ -1,0 +1,260 @@
+{% extends 'Base.html' %}
+{% load static %}
+{% block title %}Khách hàng{% endblock title %}
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/style_Interactive.css' %}">
+{% endblock style %}
+{% block main %}
+    <div class="container">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h2><b>Danh mục khách hàng</b></h2>
+                    </div>
+                    <div class="col-sm-6">
+                        <a href="#AddCustomer" class="btn btn-primary" data-bs-toggle="modal"><i class="fa-solid fa-plus"></i><span>Thêm khách hàng</span></a>					
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-hover text-center" id="DataTable">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Mã khách hàng</th>
+                        <th>Tên khách hàng</th>
+                        <th>Điện thoại</th>
+                        <th>Giới tính</th>
+                        <th>Ngày sinh</th>
+                        <th>Loại khách</th>
+                        <th>Điều chỉnh</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for Customer in Customer_data %}
+                    <tr>
+                        <th scope="row">{{forloop.counter}}</th>
+                        <td>{{Customer.makhachhang}}</td>
+                        <td>{{Customer.tenkhachhang}}</td>
+                        <td>{{Customer.dienthoai}}</td>
+                        <td>{{Customer.gioitinh}}</td>
+                        <td>{{Customer.ngaysinh}}</td>
+                        <td>{{Customer.loaikhachhang}}</td>
+                        <td>
+                            <center>
+                                <a href="#Edit-{{forloop.counter}}" class="edit" data-bs-toggle="modal"><i class="fa-solid fa-pen-to-square"></i></a>
+                            </center>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="AddCustomer" class="modal fade">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form action="{% url 'Interactive:Add_Customer' %}" method="post">
+                    {% csrf_token %}
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Thêm khách hàng</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <input class="form-control" maxlength="25" name="makhachhang" required="" type="text" placeholder="Mã KH">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <input class="form-control" maxlength="255" name="tenkhachhang" required="" type="text" placeholder="Tên khách hàng">
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <input class="form-control" maxlength="255" name="masothue" type="text" placeholder="Mã số thuế">
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <label for="id_loai_khach_hang" class="px-2" id="call_text">Loại khách hàng:</label>
+                                        <select class="form-control" id="id_loai_khach_hang" name="loaikhachhang">
+                                            <option value="">---------</option>
+                                            <option value="Khách lẻ">Khách lẻ</option>
+                                            <option value="Khách VIP">Khách VIP</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <input class="form-control" maxlength="25" name="dienthoai" required="" type="text" placeholder="Điện thoại">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <label for="id_gioi_tinh" class="px-2" id="call_text">Giới tính:</label>
+                                        <select class="form-control" id="id_gioi_tinh" name="gioitinh">
+                                            <option value="">---------</option>
+                                            <option value="Nam">Nam</option>
+                                            <option value="Nữ">Nữ</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <label for="id_ngay_sinh" class="px-2" id="call_text">Ngày sinh:</label>
+                                        <input class="form-control" id="id_ngay_sinh" name="ngaysinh" required="" type="date">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon2">@</span>
+                                    <input type="text" class="form-control" placeholder="Email" name="email" required>
+                                </div>
+                            </div>
+                            <div class="col-md-7">
+                                <div class="form-group">
+                                    <div class="form-group">
+                                        <input class="form-control" name="congty" required="" type="text" placeholder="Công ty">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <textarea class="form-control" cols="1" name="diachi" required="" rows="2" placeholder="Địa chỉ"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Lưu</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {% for i in Customer_data %}
+        <div id="Edit-{{forloop.counter}}" class="modal fade">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <form action="UPDATE_Customer/{{i.id}}" method="post">
+                        {% csrf_token %}
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Sửa thông tin khách hàng</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <input class="form-control" maxlength="25" name="makhachhang" required="" type="text" value="{{i.makhachhang}}">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <input class="form-control" maxlength="255" name="tenkhachhang" required="" type="text" value="{{i.tenkhachhang}}">
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <input class="form-control" maxlength="255" name="masothue" type="text" value="{{i.masothue}}">
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <label for="id_loai_khach_hang" class="px-2" id="call_text">Loại khách hàng:</label>
+                                            <select class="form-control" id="id_loai_khach_hang" name="loaikhachhang">
+                                                <option value="{{i.loaikhachhang}}">{{i.loaikhachhang}}</option>
+                                                <option value="Khách lẻ">Khách lẻ</option>
+                                                <option value="Khách VIP">Khách VIP</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <input class="form-control" maxlength="25" name="dienthoai" required="" type="text" value="{{i.dienthoai}}">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <label for="id_gioi_tinh" class="px-2" id="call_text">Giới tính:</label>
+                                            <select class="form-control" id="id_gioi_tinh" name="gioitinh">
+                                                <option value="{{i.gioitinh}}">{{i.gioitinh}}</option>
+                                                <option value="Nam">Nam</option>
+                                                <option value="Nữ">Nữ</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <label for="id_ngay_sinh" class="px-2" id="call_text">Ngày sinh:</label>
+                                            <input class="form-control" id="id_ngay_sinh" value="{{i.ngaysinh}}" name="ngaysinh" required="" type="date">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon2">@</span>
+                                        <input type="text" class="form-control" value="{{i.email}}" name="email" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-7">
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <input class="form-control" name="congty" required value="{{i.congty}}" type="text" placeholder="Công ty">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <textarea class="form-control" cols="1" name="diachi" required value="{{i.diachi}}" rows="2" placeholder="Địa chỉ"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Lưu</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock main %}

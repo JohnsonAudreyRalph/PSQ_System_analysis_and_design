@@ -68,33 +68,33 @@
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li>
                             <i class="fas fa-user-plus"></i>
-                            <a class="dropdown-item" href="#">Khách hàng</a>
+                            <a class="dropdown-item" href="{% url 'Interactive:Customer' %}">Khách hàng</a>
                         </li>
                         <li><hr class="dropdown-divider"></li>
                         <li>
                             <i class="fas fa-shipping-fast"></i>
-                            <a class="dropdown-item" href="#">Nhà cung cấp</a>
+                            <a class="dropdown-item" href="{% url 'Interactive:Supplier' %}">Nhà cung cấp</a>
                         </li>
                     </ul>
                 </li>
                 <li class="nav-item">
                     <i class="fas fa-shopping-cart"></i>
-                    <a class="nav-link active" aria-current="page" href="#">Nhập hàng</a>
+                    <a class="nav-link active" aria-current="page" href="{% url 'Import_Goods:Import_Goods' %}">Nhập hàng</a>
                 </li>
 
                 <li class="nav-item">
                     <i class="fas fa-shopping-basket"></i>
-                    <a class="nav-link active" aria-current="page" href="#">Bán hàng</a>
+                    <a class="nav-link active" aria-current="page" href="{% url 'Sell:Sell' %}">Bán hàng</a>
                 </li>
 
                 <li class="nav-item dropdown">
                     <i class="fas fa-cash-register"></i>
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Báo cáo & Thống kê</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li>
+                        {% comment %} <li>
                             <i class="fas fa-flag"></i>
                             <a class="dropdown-item" href="#">Báo cáo chất lượng thuốc</a>
-                        </li>
+                        </li> {% endcomment %}
                         <li>
                             <i class="fas fa-info-circle"></i>
                             <a class="dropdown-item" href="#">Báo cáo công nợ thu</a>

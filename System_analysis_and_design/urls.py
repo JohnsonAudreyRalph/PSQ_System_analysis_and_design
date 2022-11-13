@@ -21,5 +21,8 @@ urlpatterns = [
     path('', include('Login_Register.urls')),
     path('Overview/', include('Overview.urls')),
     path('Commodity/', include('Commodity.urls')),
-    path('Transaction/', include('Transaction.urls'))
+    path('Transaction/', include('Transaction.urls')),
+    path('Import_Goods/', include('Import_Goods.urls')),
+    path('Interactive/', include('Interactive.urls')),
+    path('Sell/', include('Sell.urls'))
 ]

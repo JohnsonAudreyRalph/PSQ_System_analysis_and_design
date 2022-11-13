@@ -1,0 +1,50 @@
+{% extends 'Base.html' %}
+{% load static %}
+{% block title %}Bán hàng{% endblock title %}
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/style_Sell.css' %}">
+{% endblock style %}
+{% block main %}
+    <main class="main" id="main">
+        <section class="section">
+            <div class="row text-center">
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card-title">Bán hàng</div>
+                            <form action="{% url 'Sell:Add_BillOfSale' %}" method="post" class="row g-4 container d-flex align-items-center justify-content-center">
+                                {% csrf_token %}
+                                <div class="col-md-4"> <input type="text" class="form-control" placeholder="Mã đơn hàng" name="madonhang"></div>
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <label for="id_thoi_gian" class="px-2" id="call_text">Thời gian:</label>
+                                            <input class="form-control" id="id_thoi_gian" name="thoigian" required="" type="date">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4"> <input type="text" class="form-control" placeholder="Mã trả hàng" name="matrahang"></div>
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <label for="id_loai_khach_hang" class="px-2" id="call_text">Loại khách hàng:</label>
+                                            <select class="form-control" id="id_loai_khach_hang" name="loaikhachhang">
+                                                <option value="">---------</option>
+                                                <option value="Khách lẻ">Khách lẻ</option>
+                                                <option value="Khách VIP">Khách VIP</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4"> <input type="text" class="form-control" placeholder="Tổng tiền" name="tongtien"></div>
+                                <div class="col-md-4"> <input type="text" class="form-control" placeholder="Giảm giá" name="giamgia"></div>
+                                <div class="col-md-4"> <input type="text" class="form-control" placeholder="Khách hàng trả" name="khachhangtra"></div>
+                                <button type="submit" class="btn btn-primary">Lưu</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+{% endblock main %}

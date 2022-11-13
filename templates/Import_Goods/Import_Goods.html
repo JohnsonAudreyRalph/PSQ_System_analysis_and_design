@@ -1,0 +1,111 @@
+{% extends 'Base.html' %}
+{% load static %}
+{% block title %}Nhập hàng{% endblock title %}
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/lib/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="{% static 'css/style_Import_Goods.css' %}">
+{% endblock style %}
+{% block main %}
+<main id="main" class="main">
+    <aside id="sidebar" class="sidebar">
+        <form action="{% url 'Import_Goods:Add_Bill_of_Import' %}" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label>Ngày nhập</label>
+                <input class="form-control" name="ngaynhap" type="date">
+            </div>
+            <div class="form-group">
+                <label>Mã hóa đơn</label>
+                <input class="form-control" name="mahoadon" type="text" required>
+            </div>
+            <div class="form-group">
+                <label>Mã NCC</label>
+                <input class="form-control" name="manhacungcap" type="text" required>
+            </div>
+            <hr>
+            <div class="cart">
+                <h2 class="cart-title">Danh sách</h2>
+                <div class="cart-content">
+                </div>
+                <hr>
+                <div class="total">
+                    <div class="total-title">Tổng tiền:</div>
+                    <div class="form-control total-price" readOnly="True"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Thực tính</label>
+                <input class="form-control" name="tongtien" type="text" required>
+            </div>
+            <div class="form-group">
+                <label>Đã trả</label>
+                <input class="form-control" name="datra" type="text" required>
+            </div>
+            <label for="id_trang_thai">Trạng thái:</label>
+            <select class="form-control" id="id_trang_thai" name="trangthai">
+                <option value="">---------</option>
+                <option value="Đã thanh toán">Đã thanh toán</option>
+                <option value="Chưa thanh toán hết">Chưa thanh toán hết</option>
+            </select>
+            <br>
+            <button type="submit" class="btn btn-primary btn-buy">Lưu</button>
+        </form>
+    </aside>
+    <div class="pagetitle nav" id="header">
+        <div class="d-flex align-items-center">
+            <a href="#" class="logo d-flex align-items-center">
+               <span class="d-none d-lg-block">Danh sách sản phẩm</span>
+               <i class="bi bi-list toggle-sidebar-btn"></i>
+            </a>
+        </div>
+    </div>
+    <section class="section  container">
+        <div class="row  justify-content-around text-white mt-1">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table table-striped table-hover" id="DataTable">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Mã hàng</th>
+                                    <th>Tên hàng</th>
+                                    <th>Đơn vị</th>
+                                    <th>Giá gốc</th>
+                                    <th>Giá bán</th>
+                                    <th>Tồn kho</th>
+                                    <th>Mua</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for Product in Product_data %}
+                                <tr>
+                                    <th scope="row">{{forloop.counter}}</th>
+                                    <td >{{Product.ma_hang}}</td>
+                                    <td class="product-title">{{Product.ten_hang}}</td>
+                                    <td>{{Product.don_vi}}</td>
+                                    <td>{{Product.gia_goc}}</td>
+                                    <td class="product-price">{{Product.gia_ban}}</td>
+                                    <td>{{Product.so_luong_ton_kho}}</td>
+                                    <td class="add-cart">
+                                        <button data-sid="{{Product.id}}" class="btn btn-warning btn-sm"><i class='bx bx-shopping-bag'></i></button>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+<script>
+    
+</script>
+{% endblock main %}
+{% block javascript %}
+    <script src="{% static 'js/Import_Goods.js' %}"></script>
+{% endblock javascript %}

@@ -21,6 +21,8 @@ class BillOfDelivery(models.Model):
 
 
 class BillOfImport(models.Model):
+    mahoadon = models.CharField(db_column='MaHoaDon', max_length=10, db_collation='SQL_Latin1_General_CP1_CI_AS')  # Field name made lowercase.
+    manhacungcap = models.CharField(db_column='MaNhaCungCap', max_length=10, db_collation='SQL_Latin1_General_CP1_CI_AS', blank=True, null=True)  # Field name made lowercase.
     ngaynhap = models.DateField(db_column='NgayNhap', blank=True, null=True)  # Field name made lowercase.
     tongtien = models.IntegerField(db_column='TongTien', blank=True, null=True)  # Field name made lowercase.
     datra = models.IntegerField(db_column='DaTra', blank=True, null=True)  # Field name made lowercase.
@@ -29,6 +31,7 @@ class BillOfImport(models.Model):
     class Meta:
         managed = False
         db_table = 'Bill_of_Import'
+        unique_together = (('id', 'mahoadon'),)
 
 
 class BillOfReturnGoodsBack(models.Model):

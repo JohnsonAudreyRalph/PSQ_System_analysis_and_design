@@ -14,11 +14,13 @@
                     </div>
                 </div>
             </div>
-            <table class="table table-striped table-hover" id="DataTable">
+            <table class="table table-striped table-hover text-center" id="DataTable">
                 <thead>
                     <tr>
                         <th>STT</th>
                         <th>Ngày nhập</th>
+                        <th>Mã hóa đơn</th>
+                        <th>Mã NCC</th>
                         <th>Tổng tiền</th>
                         <th>Đã trả</th>
                         <th>Trạng thái</th>
@@ -30,6 +32,8 @@
                     <tr>
                         <th scope="row">{{forloop.counter}}</th>
                         <td>{{Bill_of_Import.ngaynhap}}</td>
+                        <td>{{Bill_of_Import.mahoadon}}</td>
+                        <td>{{Bill_of_Import.manhacungcap}}</td>
                         <td>{{Bill_of_Import.tongtien}}</td>
                         <td>{{Bill_of_Import.datra}}</td>
                         <td>{{Bill_of_Import.trangthai}}</td>
@@ -40,8 +44,26 @@
                         </td>
                     </tr>
                     {% endfor %}
+                    
+                    <tr>
+                        
+                        <td colspan="4"><b>Tổng tiền</b></td>
+                        {% comment %} <td id="SUM"></td> {% endcomment %}
+                        <td>{{item}}</td>
+                    </tr>
                 </tbody>
             </table>
+            {% comment %} <script>
+                $(document).ready(function(){
+                    var empTongTien;
+                    var AllTongTien = 0;
+                    $('td:nth-child(5)').each(function(){
+                        empTongTien = $(this).html();
+                        AllTongTien += parseInt(empTongTien);
+                        $("#SUM").text(AllTongTien);
+                    });
+                });
+            </script> {% endcomment %}
         </div>
     </div>
     {% for i in Bill_of_Import_data %}
@@ -58,6 +80,14 @@
                             <div class="form-group">
                                 <label>Ngày nhập</label>
                                 <input class="form-control" value="{{i.ngaynhap}}" name="ngaynhap" type="date">
+                            </div>
+                            <div class="form-group">
+                                <label>Mã hóa đơn</label>
+                                <input class="form-control" value="{{i.mahoadon}}" name="mahoadon" type="text" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Mã NCC</label>
+                                <input class="form-control" value="{{i.manhacungcap}}" name="manhacungcap" type="text" required>
                             </div>
                             <div class="form-group">
                                 <label>Tổng tiền</label>

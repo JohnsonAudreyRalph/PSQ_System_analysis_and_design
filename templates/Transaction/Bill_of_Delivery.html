@@ -5,5 +5,122 @@
     <link rel="stylesheet" href="{% static 'css/style_Transaction.css' %}">
 {% endblock style %}
 {% block main %}
+    <div class="container">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h2><b>Hóa đơn vận chuyển</b></h2>
+                    </div>
+                    <div class="col-sm-6">
+                        <a href="#add_Bill_of_Delivery" class="btn btn-primary" data-bs-toggle="modal"><i class="fa-solid fa-plus"></i><span>Thêm mới</span></a>					
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-hover" id="DataTable">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Mã phiếu chuyển</th>
+                        <th>Địa điêm bắt đầu</th>
+                        <th>Địa điểm giao hàng</th>
+                        <th>Trạng thái</th>
+                        <th>Điều chỉnh</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for Bill_of_Delivery in Bill_of_Delivery_data %}
+                    <tr>
+                        <th scope="row">{{forloop.counter}}</th>
+                        <td>{{Bill_of_Delivery.maphieuchuyen}}</td>
+                        <td>{{Bill_of_Delivery.tudiadiem}}</td>
+                        <td>{{Bill_of_Delivery.dendiadiem}}</td>
+                        <td>{{Bill_of_Delivery.trangthai}}</td>
+                        <td>
+                            <center>
+                                <a href="#Edit-{{forloop.counter}}" class="edit" data-bs-toggle="modal"><i class="fa-solid fa-pen-to-square"></i></a>
+                            </center>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 
+    <div id="add_Bill_of_Delivery" class="modal fade">
+		<div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{% url 'Transaction:Add_Bill_of_Devicery' %}" method="post">
+                    {% csrf_token %}
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Thêm hóa đơn vận chuyển</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="id_ma_phieu_chuyen">Mã phiếu chuyển:</label>
+                        <input class="form-control" id="id_ma_phieu_chuyen" maxlength="10" name="maphieuchuyen" required="" type="text">
+                        <label for="id_dia_diem_giao_hang">Địa điểm giao hàng:</label>
+                        <input class="form-control" id="id_dia_diem_giao_hang" name="tudiadiem" required="" type="text">
+                        <label for="id_dia_diem_nhan_hang">Địa điểm nhận hàng:</label>
+                        <input class="form-control" id="id_dia_diem_nhan_hang" name="dendiadiem" required="" type="text">
+                        <label for="id_trang_thai">Trạng thái:</label>
+                        <select class="form-control" id="id_trang_thai" name="trangthai">
+                            <option selected="" value="">---------</option>
+                            <option value="Đã giao hàng">Đã giao hàng</option>
+                            <option value="Chưa giao hàng">Chưa giao hàng</option>
+                            <option value="Đang giao hàng">Đang giao hàng</option>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Lưu</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+	</div>
+
+    {% for i in Bill_of_Delivery_data %}
+        <div id="Edit-{{forloop.counter}}" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="UPDATE_Bill_of_Delivery/{{i.id}}" method="post">
+                        {% csrf_token %}
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Sửa thông tin hóa đơn giao hàng</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>Mã phiếu chuyển</label>
+                                <input name="maphieuchuyen" value="{{i.maphieuchuyen}}" type="text" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Địa điểm giao hàng</label>
+                                <input name="tudiadiem" value="{{i.tudiadiem}}" type="text" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Địa điểm nhận hàng</label>
+                                <input name="dendiadiem" value="{{i.dendiadiem}}" type="text" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Trạng thái</label>
+                                <select class="form-control" name="trangthai">
+                                    <option value="{{i.trangthai}}">{{i.trangthai}}</option>
+                                    <option value="Đã giao hàng">Đã giao hàng</option>
+                                    <option value="Chưa giao hàng">Chưa giao hàng</option>
+                                    <option value="Đang giao hàng">Đang giao hàng</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Lưu</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
 {% endblock main %}
