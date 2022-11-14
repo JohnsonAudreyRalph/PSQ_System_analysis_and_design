@@ -7,7 +7,8 @@ from .forms import Add_Bill_of_Return_the_Goods_Forms, Add_Bill_of_Return_Goods_
 class Bill_of_Sale(View):
     def get(self, request):
         Bill_of_Sale_data = BillOfSale.objects.all()
-        return render(request, 'Transaction/Bill_of_Sale.html', {'Bill_of_Sale_data':Bill_of_Sale_data})
+        items = BillOfSale.objects.aggregate(TOTAL = Sum('tongtien'))['TOTAL']
+        return render(request, 'Transaction/Bill_of_Sale.html', {'Bill_of_Sale_data':Bill_of_Sale_data, 'item':items})
 
 def Bill_of_Sale_UPDATE(request, id):
     if request.method == "POST":

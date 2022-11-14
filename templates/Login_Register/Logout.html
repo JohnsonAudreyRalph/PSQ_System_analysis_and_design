@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,11 +6,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Logout</title>
+    <link rel="stylesheet" href="{% static 'css/style_Logout.css' %}">
 </head>
 <body>
-    <h1>LOGOUT</h1>
-    <div><a href="{% url 'login' %}">LOGIN</a></div>
-    <div><a href="{% url 'home' %}">HOME</a></div>
-    <div><a href="{% url 'register' %}">REGISTER</a></div>
+    <div class="logout-block">
+        <div class="grids-2">
+            <div class="right-grid">
+                <h2>LOGOUT</h2>
+                <a href="{% url 'Login_Register:Login' %}" class="home btn"> Quay lại đăng nhập </a>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

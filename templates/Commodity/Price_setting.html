@@ -2,6 +2,8 @@
 {% load static %}
 {% block title %}Thiết lập giá{% endblock title %}
 {% block style %}
+    <link rel="stylesheet" href="{% static 'css/lib/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="{% static 'css/style_Commodity.css' %}">
 {% endblock style %}
 {% block main %}
@@ -22,7 +24,7 @@
                         <th>Tên hàng</th>
                         <th>Giá gốc</th>
                         <th>Giá bán</th>
-                        <th>Điều chỉnh</th>
+                        <th class="text-center">Điều chỉnh</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -108,3 +110,6 @@
         </div>
     {% endfor %}
 {% endblock main %}
+{% block javascript %}
+    <script src="{% static 'js/Product.js' %}"></script>
+{% endblock javascript %}

@@ -1,0 +1,118 @@
+{% extends 'Base.html' %}
+{% load static %}
+{% block title %}Thống kê thu nhập{% endblock title %}
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/style_Reports_and_Statistics.css' %}">
+    {% comment %} <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.2/dist/chart.min.js"></script> {% endcomment %}
+    <script src="{% static 'js/lib/apexcharts.min copy.js' %}"></script>
+    
+{% endblock style %}
+{% block main %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <center>
+                                <h5>Nhập hàng</h5>
+                            </center>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <hr />
+                        </div>
+                    </div>
+                    <div id="areaChart"></div>
+                    <script>
+                        document.addEventListener("DOMContentLoaded", () => {
+                            new ApexCharts(document.querySelector("#areaChart"), {
+                              series: [{
+                                name: "Desktops",
+                                data: [{% for Import in Bill_of_Import %} '{{Import.datra}}', {% endfor %}]
+                              }],
+                              chart: {
+                                height: 350,
+                                type: 'line',
+                                zoom: {
+                                  enabled: false
+                                }
+                              },
+                              dataLabels: {
+                                enabled: false
+                              },
+                              stroke: {
+                                curve: 'straight'
+                              },
+                              grid: {
+                                row: {
+                                  colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+                                  opacity: 0.5
+                                },
+                              },
+                              xaxis: {
+                                categories: [{% for Import in Bill_of_Import %} '{{Import.ngaynhap}}', {% endfor %}],
+                              }
+                            }).render();
+                            });
+                    </script>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <center>
+                                <h5>Bán hàng</h5>
+                            </center>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <hr />
+                        </div>
+                    </div>
+                    <div id="lineChart"></div>
+                    <script>
+                        document.addEventListener("DOMContentLoaded", () => {
+                            new ApexCharts(document.querySelector("#lineChart"), {
+                              series: [{
+                                name: "Desktops",
+                                data: [{% for Sale in Bill_of_Sale %} '{{Sale.tongtien}}', {% endfor %}]
+                              }],
+                              chart: {
+                                height: 350,
+                                type: 'line',
+                                zoom: {
+                                  enabled: false
+                                }
+                              },
+                              dataLabels: {
+                                enabled: false
+                              },
+                              stroke: {
+                                curve: 'straight'
+                              },
+                              grid: {
+                                row: {
+                                  colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+                                  opacity: 0.5
+                                },
+                              },
+                              xaxis: {
+                                categories: [{% for Sale in Bill_of_Sale %} '{{Sale.thoigian}}', {% endfor %}],
+                              }
+                            }).render();
+                            });
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock main %}

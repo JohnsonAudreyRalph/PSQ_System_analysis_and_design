@@ -14,7 +14,7 @@
                     </div>
                 </div>
             </div>
-            <table class="table table-striped table-hover" id="DataTable">
+            <table class="table table-striped table-hover text-center" id="DataTable">
                 <thead>
                     <tr>
                         <th>STT</th>
@@ -46,8 +46,13 @@
                         </td>
                     </tr>
                     {% endfor %}
+                    {% comment %} <tr>
+                        <td colspan="5"></td>
+                        <td>{{item}}</td>
+                    </tr> {% endcomment %}
                 </tbody>
             </table>
+            <div><b>Tổng tiền: </b>{{item}}</div>
         </div>
     </div>
 
@@ -107,3 +112,6 @@
         </div>
     {% endfor %}
 {% endblock main %}
+{% block javascript %}
+    <script src="{% static 'js/Product.js' %}"></script>
+{% endblock javascript %}

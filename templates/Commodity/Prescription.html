@@ -7,74 +7,6 @@
     <link rel="stylesheet" href="{% static 'css/style_Commodity.css' %}">
 {% endblock style %}
 {% block main %}
- {% comment %} <main id="main" class="main">
-    <aside id="sidebar" class="sidebar">
-        <ul class="sidebar-nav" id="sidebar-nav">
-           <li class="nav-item"> <a class="nav-link " href="#"> <i class="bi bi-grid"></i> <span>Lọc và tìm kiếm</span> </a></li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#"> <i class="bi bi-journal-text"></i><span>Trạng thái</span><i class="bi bi-chevron-down ms-auto"></i> </a>
-                <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    <li> <a href="#"> <input type="checkbox" name="" id=""> Áp dụng</a> </li>
-                    <li> <a href="#"> <input type="checkbox" name="" id=""> Chưa áp dụng </a> </li>
-                </ul>
-            </li>
-        </ul>
-    </aside>
-    <div class="pagetitle" id="header">
-        <div class="d-flex align-items-center justify-content-between">
-            <a href="#" class="logo d-flex align-items-center">
-               <span class="d-none d-lg-block">Đơn thuốc mẫu</span>
-               <i class="bi bi-list toggle-sidebar-btn"></i>
-            </a>
-         </div>
-       <h1></h1>
-    </div>
-    <section class="section  container">
-        <div class="row justify-content-around mt-1">
-            <div class="col-sm-12">
-                <a href="Add_Prescription" class="btn btn-primary float-end">Thêm mới</a>
-            </div>
-        </div>
-
-        <div class="row  justify-content-around text-white mt-1">
-            <div class="col-lg-12">
-                <div class="card">
-                    <div class="card-body">
-                        <table class="table datatable table-hover">
-                            <thead>
-                                <tr>
-                                    <th scope="col">STT</th>
-                                    <th scope="col">Ngày nhập</th>
-                                    <th scope="col">Mã thuốc</th>
-                                    <th scope="col">Tên thuốc</th>
-                                    <th scope="col">Đơn vị</th>
-                                    <th scope="col">Số lượng dùng</th>
-                                    <th scope="col">Liều dùng</th>
-                                    <th scope="col">Trạng thái thuốc</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for Prescription in Prescription_data %}
-                                <tr>
-                                    <th scope="row">{{forloop.counter}}</th>
-                                    <td>{{Prescription.Ngay_Nhap}}</td>
-                                    <td>{{Prescription.Ma_Thuoc}}</td>
-                                    <td>{{Prescription.Ten_Thuoc}}</td>
-                                    <td>{{Prescription.Don_Vi}}</td>
-                                    <td>{{Prescription.So_Luong_Dung}}</td>
-                                    <td>{{Prescription.Lieu_Dung}}</td>
-                                    <td>{{Prescription.Trang_Thai_Thuoc}}</td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
- </main> {% endcomment %}
-
     <div class="container">
         <div class="table-wrapper">
             <div class="table-title">
@@ -99,7 +31,7 @@
                         <th>Liều dùng</th>
                         <th>Trạng thái thuốc</th>
                         <th>Ghi chú</th>
-                        <th>Điều chỉnh</th>
+                        <th class="text-center">Điều chỉnh</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -114,7 +46,7 @@
                             <td>{{Prescription.lieu_dung}}</td>
                             <td>{{Prescription.trang_thai_thuoc}}</td>
                             <td>{{Prescription.ghi_chu}}</td>
-                        <td>
+                        <td class="text-center">
                             <center>
                                 <a href="#Edit_Pre-{{forloop.counter}}" class="edit" data-bs-toggle="modal"><i class="fa-solid fa-pen-to-square"></i></a>
                             </center>

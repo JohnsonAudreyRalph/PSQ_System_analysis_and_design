@@ -61,7 +61,10 @@ class Login(View):
             if user is not None:
                 login(request, user)
                 return redirect('/Login_Success/')
-                
             else:
                 messages.error(request, "BAD")
                 return HttpResponse('EROR')
+
+def Logout(request):
+    logout(request)
+    return render(request, 'Login_Register/Logout.html')

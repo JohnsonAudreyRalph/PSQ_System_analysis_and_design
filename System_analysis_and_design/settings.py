@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'Transaction',
     'Import_Goods',
     'Interactive',
-    'Sell'
+    'Sell',
+    'Reports_and_Statistics'
 ]
 
 MIDDLEWARE = [

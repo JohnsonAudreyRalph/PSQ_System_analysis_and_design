@@ -42,28 +42,12 @@
                                 <a href="#Edit-{{forloop.counter}}" class="edit" data-bs-toggle="modal"><i class="fa-solid fa-pen-to-square"></i></a>
                             </center>
                         </td>
+                        <td></td>
                     </tr>
                     {% endfor %}
-                    
-                    <tr>
-                        
-                        <td colspan="4"><b>Tổng tiền</b></td>
-                        {% comment %} <td id="SUM"></td> {% endcomment %}
-                        <td>{{item}}</td>
-                    </tr>
                 </tbody>
             </table>
-            {% comment %} <script>
-                $(document).ready(function(){
-                    var empTongTien;
-                    var AllTongTien = 0;
-                    $('td:nth-child(5)').each(function(){
-                        empTongTien = $(this).html();
-                        AllTongTien += parseInt(empTongTien);
-                        $("#SUM").text(AllTongTien);
-                    });
-                });
-            </script> {% endcomment %}
+            <div><b>Tổng tiền: </b>{{item}}</div>
         </div>
     </div>
     {% for i in Bill_of_Import_data %}
@@ -117,3 +101,6 @@
         </div>
     {% endfor %}
 {% endblock main %}
+{% block javascript %}
+    <script src="{% static 'js/Product.js' %}"></script>
+{% endblock javascript %}

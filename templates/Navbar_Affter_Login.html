@@ -91,22 +91,18 @@
                     <i class="fas fa-cash-register"></i>
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Báo cáo & Thống kê</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        {% comment %} <li>
-                            <i class="fas fa-flag"></i>
-                            <a class="dropdown-item" href="#">Báo cáo chất lượng thuốc</a>
-                        </li> {% endcomment %}
                         <li>
                             <i class="fas fa-info-circle"></i>
-                            <a class="dropdown-item" href="#">Báo cáo công nợ thu</a>
+                            <a class="dropdown-item" href="{% url 'Reports_and_Statistics:Debt_Cllection_Report' %}">Báo cáo công nợ thu</a>
                         </li>
                         <li>
                             <i class="fas fa-info"></i>
-                            <a class="dropdown-item" href="#">Báo cáo công nợ trả</a>
+                            <a class="dropdown-item" href="{% url 'Reports_and_Statistics:Debt_Payment_Report' %}">Báo cáo công nợ trả</a>
                         </li>
                         <li><hr class="dropdown-divider"></li>
                         <li>
                             <i class="fas fa-money-bill-wave"></i>
-                            <a class="dropdown-item" href="#">Thống kê thu nhập</a>
+                            <a class="dropdown-item" href="{% url 'Reports_and_Statistics:Income_Statistics' %}">Thống kê thu nhập</a>
                         </li>
                     </ul>
                 </li>
@@ -126,7 +122,7 @@
                         <li><hr class="dropdown-divider"></li>
                         <li class="nav-item">
                             <i class="fas fa-sign-out-alt"></i>
-                            <a class="dropdown-item" href="#">Logout</a>
+                            <a class="dropdown-item" href="{% url 'Login_Register:Logout' %}">Logout</a>
                         </li>
                     </ul>
                 </div>
