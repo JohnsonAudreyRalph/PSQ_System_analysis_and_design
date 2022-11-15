@@ -102,9 +102,9 @@
                             <label>Trạng thái cũ</label>
                             <input name="trangthai" value="{{i.trangthai}}" type="text" class="form-control" required ReadOnly="true">
                             <label for="id_tu_ngay">Từ ngày:</label>
-                            <input class="form-control" id="id_tu_ngay" name="tungay" required="" type="date">
+                            <input class="form-control" id="id_tu_ngay" value="{{i.tungay}}" ReadOnly="true" type="text">
                             <label for="id_den_ngay">Đến ngày:</label>
-                            <input class="form-control" id="id_den_ngay" name="denngay" required="" type="date">
+                            <input class="form-control" id="id_den_ngay" value="{{i.denngay}}" ReadOnly="true" type="text">
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

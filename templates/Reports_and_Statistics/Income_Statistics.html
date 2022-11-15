@@ -30,7 +30,7 @@
                         document.addEventListener("DOMContentLoaded", () => {
                             new ApexCharts(document.querySelector("#areaChart"), {
                               series: [{
-                                name: "Desktops",
+                                name: "Đã trả",
                                 data: [{% for Import in Bill_of_Import %} '{{Import.datra}}', {% endfor %}]
                               }],
                               chart: {
@@ -82,7 +82,7 @@
                         document.addEventListener("DOMContentLoaded", () => {
                             new ApexCharts(document.querySelector("#lineChart"), {
                               series: [{
-                                name: "Desktops",
+                                name: "Tổng tiền",
                                 data: [{% for Sale in Bill_of_Sale %} '{{Sale.tongtien}}', {% endfor %}]
                               }],
                               chart: {

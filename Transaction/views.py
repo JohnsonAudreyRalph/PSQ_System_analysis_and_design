@@ -4,6 +4,15 @@ from django.db.models import Sum
 from .models import BillOfDelivery, BillOfImport, BillOfReturnGoodsBack, BillOfReturnTheGoods, BillOfSale
 from .forms import Add_Bill_of_Return_the_Goods_Forms, Add_Bill_of_Return_Goods_Back_Forms, Add_Bill_of_Devicery_Forms
 # Create your views here.
+import pyodbc
+# Define Connection String
+conn = pyodbc.connect(
+        'Driver={ODBC Driver 17 for SQL Server};'
+        'Server=DESKTOP-2B5FRR5;'
+        'Database=System_analysis_and_design;'
+        'Trusted_Connection=yes;'
+    )
+
 class Bill_of_Sale(View):
     def get(self, request):
         Bill_of_Sale_data = BillOfSale.objects.all()
@@ -14,23 +23,14 @@ def Bill_of_Sale_UPDATE(request, id):
     if request.method == "POST":
         print("Nhận giá trị rồi")
         madonhang = request.POST.get('madonhang')
-        thoigian = request.POST.get('thoigian')
         matrahang = request.POST.get('matrahang')
         loaikhachhang = request.POST.get('loaikhachhang')
         tongtien = request.POST.get('tongtien')
         giamgia = request.POST.get('giamgia')
         khachhangtra = request.POST.get('khachhangtra')
-        Bill_of_Sale_dt = BillOfSale(
-            id = id,
-            madonhang = madonhang,
-            thoigian = thoigian,
-            matrahang = matrahang,
-            loaikhachhang = loaikhachhang,
-            tongtien = tongtien,
-            giamgia = giamgia,
-            khachhangtra = khachhangtra,
-        )
-        Bill_of_Sale_dt.save()
+        cursor = conn.cursor();
+        cursor.execute('UPDATE [System_analysis_and_design].[dbo].[Bill_of_Sale] SET MaDonHang = ?, MaTraHang = ?, LoaiKhachHang = ?, TongTien = ?, GiamGia = ?, KhachHangTra = ? WHERE id = ?', (madonhang, matrahang, loaikhachhang, tongtien, giamgia, khachhangtra, id));
+        cursor.commit()
         return redirect('/Transaction/Bill_of_Sale/')
     return render(request, 'Transaction/Bill_of_Sale.html')
 
@@ -43,22 +43,14 @@ class Bill_of_Import(View):
 def Bill_of_Import_UPDATE(request, id):
     if request.method == "POST":
         print("Nhận giá trị rồi")
-        ngaynhap = request.POST.get('ngaynhap')
         manhacungcap = request.POST.get('manhacungcap')
         mahoadon = request.POST.get('mahoadon')
         tongtien = request.POST.get('tongtien')
         datra = request.POST.get('datra')
         trangthai = request.POST.get('trangthai')
-        Bill_of_Import_dt = BillOfImport(
-            id = id,
-            ngaynhap = ngaynhap,
-            manhacungcap = manhacungcap,
-            mahoadon = mahoadon,
-            tongtien = tongtien,
-            datra = datra,
-            trangthai = trangthai,
-        )
-        Bill_of_Import_dt.save()
+        cursor = conn.cursor();
+        cursor.execute('UPDATE [System_analysis_and_design].[dbo].[Bill_of_Import] SET MaHoaDon = ?, MaNhaCungCap = ?, TongTien = ?, DaTra = ?, TrangThai = ? WHERE id = ?', (mahoadon, manhacungcap, tongtien, datra, trangthai, id));
+        cursor.commit()
         return redirect('/Transaction/Bill_of_Import/')
     return render(request, 'Transaction/Bill_of_Import.html')
 
@@ -80,15 +72,11 @@ def UPDATE_Bill_of_Return_the_Goods(request, id):
     if request.method == "POST":
         print("Nhận giá trị rồi")
         matrahang = request.POST.get('matrahang')
-        thoigian = request.POST.get('thoigian')
+        # thoigian = request.POST.get('thoigian')
         makhachhang = request.POST.get('makhachhang')
-        Bill_of_Return_the_Goods_dt = BillOfReturnTheGoods(
-            id = id,
-            matrahang = matrahang,
-            thoigian = thoigian,
-            makhachhang = makhachhang,
-        )
-        Bill_of_Return_the_Goods_dt.save()
+        cursor = conn.cursor();
+        cursor.execute('UPDATE [System_analysis_and_design].[dbo].[Bill_of_Return_the_Goods] SET MaTraHang = ?, MaKhachHang = ? WHERE id = ?', (matrahang, makhachhang, id));
+        cursor.commit()
         return redirect('/Transaction/Bill_of_Return_the_Goods/')
     return render(request, 'Transaction/Bill_of_Return_the_Goods.html')
 
@@ -109,22 +97,15 @@ class Add_Bill_of_Return_Goods_Back(View):
 def UPDATE_Bill_of_Return_Goods_Back(request, id):
     if request.method == "POST":
         print("Nhận giá trị rồi")
-        ngaytra = request.POST.get('ngaytra')
+        # ngaytra = request.POST.get('ngaytra')
         tenncc = request.POST.get('tenncc')
         tongtienhangtra = request.POST.get('tongtienhangtra')
         tongtienncccantra = request.POST.get('tongtienncccantra')
         nccdatra = request.POST.get('nccdatra')
         trangthai = request.POST.get('trangthai')
-        Bill_of_Return_Goods_Back_dt = BillOfReturnGoodsBack(
-            id = id,
-            ngaytra = ngaytra,
-            tenncc = tenncc,
-            tongtienhangtra = tongtienhangtra,
-            tongtienncccantra = tongtienncccantra,
-            nccdatra = nccdatra,
-            trangthai = trangthai,
-        )
-        Bill_of_Return_Goods_Back_dt.save()
+        cursor = conn.cursor();
+        cursor.execute('UPDATE [System_analysis_and_design].[dbo].[Bill_of_Return_Goods_Back] SET TenNCC = ?, TongTienHangTra = ?, TongTienNCCCanTra = ?, NCCDaTra = ?, TrangThai = ? WHERE id = ?', (tenncc, tongtienhangtra, tongtienncccantra, nccdatra, trangthai, id));
+        cursor.commit()
         return redirect('/Transaction/Bill_of_Return_Goods_Back/')
     return render(request, 'Transaction/Bill_of_Return_Goods_Back.html')
 
