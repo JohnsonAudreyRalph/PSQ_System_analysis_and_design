@@ -8,9 +8,10 @@ class Sell(View):
 
 class Add_BillOfSale(View):
     def post(self, request):
-        fm = Add_BillOfSale_Forms(request.POST)
-        if fm.is_valid():
-            fm.save()
-            return render(request, 'Sell/Sell.html')
-        else:
-            return render(request, 'Sell/Sell.html')
+        return render(request, 'Sell/Sell.html')
+        # fm = Add_BillOfSale_Forms(request.POST)
+        # if fm.is_valid():
+        #     fm.save()
+        #     return render(request, 'Sell/Sell.html')
+        # else:
+        #     return render(request, 'Sell/Sell.html')

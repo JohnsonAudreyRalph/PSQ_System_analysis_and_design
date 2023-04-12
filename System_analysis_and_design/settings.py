@@ -85,18 +85,11 @@ WSGI_APPLICATION = 'System_analysis_and_design.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'mssql',
-        'NAME': 'System_analysis_and_design',
-        'USER': 'sa',
-        'PASSWORD': '12',
-        'HOST': 'DESKTOP-2B5FRR5',
-        'PORT': '',
-
-        'OPTIONS': {
-            'driver': 'ODBC Driver 17 for SQL Server',
-        },
-    },
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
+
 
 
 # Password validation
