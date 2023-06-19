@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from .models import DebtCllectionReport, DebtPaymentReport
 # Create your views here.
-import pyodbc
+# import pyodbc
 # Define Connection String
 # conn = pyodbc.connect(
 #         'Driver={ODBC Driver 17 for SQL Server};'
@@ -112,5 +112,5 @@ class Income_Statistics(View):
         #     "Bill_of_Import": Bill_of_Import_data,
         #     "Bill_of_Sale": Bill_of_Sale_data
         # }
-        return render(request, 'Reports_and_Statistics/Income_Statistics.html', context)
+        # return render(request, 'Reports_and_Statistics/Income_Statistics.html', context)
         return render(request, 'Reports_and_Statistics/Income_Statistics.html')
