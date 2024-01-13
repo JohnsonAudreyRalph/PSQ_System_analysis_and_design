@@ -9,9 +9,11 @@ from django.contrib import messages
 class Home(View):
     def get(self, request):
         return render(request, 'Login_Register/Login.html')
+    
 class Affter_Login(View):
     def get(self, request):
         return render(request, 'Overview/Overview_Interface.html')
+    
 class Register(View):
     def get(self, request):
         return render(request, 'Login_Register/Register.html')
